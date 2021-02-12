@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  .details-container {
+    display: grid;
+    // grid-template-rows: 1fr 2fr 3fr;
+    // align-items: center;
+    // flex-direction: column;
+    // justify-content: center;
+    // position: relative;
+    max-width: 600px;
+    .stats > span {
+      padding-right: 2rem;
+    }
+  }
+
+  .details-container > div {
+    padding: 1.5rem;
+  }
+}

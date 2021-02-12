@@ -1,0 +1,12 @@
+.card {
+  .card-img-top {
+    border-radius: 5%;
+    height: 300px;
+    max-width: 200px;
+    object-fit: cover;
+    
+  }
+  .card-body{
+    overflow-wrap: normal;
+  }
+}

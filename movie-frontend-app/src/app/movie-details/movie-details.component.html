@@ -1,0 +1,21 @@
+
+<div class="container">
+  <div class="img-container">
+    <div class="image">
+      <img [src]="movie.image" alt="movie.title">
+    </div>
+  </div>
+  <div class="details-container">
+    <div class="header">
+      <h1>
+        {{movie.title}}
+      </h1>
+    </div>
+    <div class="stats">
+      <span>{{movie.release_date}}</span>
+      <span>{{movie.runtime}}mm</span>
+      <span>{{movie.popularity}}</span>
+    </div>
+    <div class="details">{{movie.overview}}</div>
+  </div>
+</div>

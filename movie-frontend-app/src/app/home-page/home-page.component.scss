@@ -1,0 +1,16 @@
+// .expand {
+//     width: 100vw;
+// }
+
+.container {
+  background-color: black;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  justify-content: center;
+
+  
+}
