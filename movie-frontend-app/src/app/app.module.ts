@@ -6,6 +6,7 @@ import { MovieComponent } from './movie/movie.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ClickOutsideModule
   ],
   providers: [],
   bootstrap: [AppComponent]

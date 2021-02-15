@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {  map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -23,11 +22,13 @@ export class ApiRequestService{
     // API_URL: string = 'https://api.themoviedb.org/3/search/movie?api_key=07965a14da309795e1724733d32ed7cc&query=';
     IMAGE_BASE_URL = '';
 
+    // search movies by id
     getMovies(searchTerm): Observable<any> {
         return this.httpClient
             .get(this.API_SEARCH_URL + searchTerm);
     }
 
+    // Get particular movie details
     getMovie(id: string): Observable<object> {
         let url = this.API_BASE_URL + 'movie/' + id + '?' + this.API_KEY; 
         return this.httpClient
@@ -37,13 +38,31 @@ export class ApiRequestService{
     getConfiguration(): void {
         this.httpClient.get(this.API_CONFIG_URL)
             .subscribe((data) => {
-                console.log(data);
                 this.IMAGE_BASE_URL = data['images'].base_url;
             }); 
     }
 
     getImage(posterId: string): string {
         return this.IMAGE_BASE_URL + 'w300' + posterId;
+    }
+
+    getMoviesByTrend(trend: string, page: string = "1"): Observable<any> {
+        const url = `${this.API_BASE_URL}movie/${trend}`
+        return this.httpClient.get(url, {
+            params: {
+                "api_key": "07965a14da309795e1724733d32ed7cc",
+                "page": page
+            }
+        });
+    }
+
+    getCastAndCrew(movieID): Observable<any> {
+        const url = `${this.API_BASE_URL}movie/${movieID}/credits`;
+        return this.httpClient.get(url, {
+            params: {
+                'api_key' : '07965a14da309795e1724733d32ed7cc'
+            }
+        });
     }
 
 }

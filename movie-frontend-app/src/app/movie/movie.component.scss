@@ -1,12 +1,24 @@
-.card {
-  .card-img-top {
-    border-radius: 5%;
-    height: 300px;
-    max-width: 200px;
-    object-fit: cover;
+.movie-card {
+  max-width: 200px;
+
+  .movie-image-wrap {
+
+    .card-img-top {
+      border-radius: 5%;
+      height: 300px;
+      max-width: 200px;
+      object-fit: cover;
+      
+    }  
     
   }
+
+
+
   .card-body{
-    overflow-wrap: normal;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
   }
+
 }

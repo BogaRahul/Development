@@ -1,22 +1,88 @@
-.container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  .details-container {
+.movie-details-container {
+  .movie-container {
     display: grid;
-    // grid-template-rows: 1fr 2fr 3fr;
-    // align-items: center;
-    // flex-direction: column;
-    // justify-content: center;
-    // position: relative;
-    max-width: 600px;
-    .stats > span {
-      padding-right: 2rem;
+    grid-template-columns: 300px 2fr;
+    border: 1px solid red;
+    margin: 3rem;
+    .img-container {
+      img {
+        max-width: 300px;
+        object-fit: cover;
+      }
+    }
+    .details-container {
+      max-width: 700px;
+      .header,
+      .stats,
+      .details {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .header {
+        max-height: 200px;
+        padding-left: 2rem;
+        line-height: 50px;
+        span {
+          font-size: 2rem;
+        }
+      }
+      .stats {
+        height: 50px;
+        background-color: white;
+        color: black;
+      }
+      .stats > span {
+        padding-right: 2rem;
+      }
+      .details {
+        max-height: 200px;
+        span {
+          padding: 2rem;
+        }
+      }
     }
   }
+  .cast {
+    display: flex;
+    // grid-template-columns: 100px 1fr;
+    .cast-label {
+      writing-mode: sideways-lr;
+      // height: 270px;
+      font-size: 2.0rem;
+      text-align: center;
+      background-color: coral;
+    }
+    .cast-row {
+      display: inline-flex;
+      // flex-direction: row;
+      // flex-wrap: wrap;
+      // float: left;
+      // white-space: nowrap;
+      overflow-x: scroll;
+      width: 1020px;
+      .cast-col {
+        display: flex;
+        flex-direction: column;
+      //   float: left;
+        margin: 0.5rem;
+        // height: 250px;
+        // max-width: 150px;
+        text-align: center;
+        .cast-img {
+          width: 150px;
+          object-fit: cover;
+          border-radius: 50%;
 
-  .details-container > div {
-    padding: 1.5rem;
+        }
+        .cast-img:hover {
+          background-color: red;
+        }
+        .actor-name{
+          font-size: 1rem;
+          margin-top: 1rem;
+        }
+      }
+    }
   }
 }

@@ -1,21 +1,39 @@
 
-<div class="container">
-  <div class="img-container">
-    <div class="image">
+<div class="movie-details-container">
+  <div class="movie-container">
+    <div class="img-container">
       <img [src]="movie.image" alt="movie.title">
     </div>
+    <div class="details-container">
+      <div class="header">
+        <span>{{movie.title}}</span>
+      </div>
+      <div class="stats">
+        <span>{{movie.release_date}}</span>
+        <span>{{movie.runtime}}min</span>
+        <span>{{movie.popularity}}</span>
+      </div>
+      <div class="details">
+        <span class="overview">{{movie.overview}}</span>
+      </div>
+    </div>
   </div>
-  <div class="details-container">
-    <div class="header">
-      <h1>
-        {{movie.title}}
-      </h1>
+  <div class="cast">
+    <div class="cast-label">CAST</div>
+    <div class="cast-row">
+      <div class="cast-col" *ngFor="let actor of cast" >
+        <img class="cast-img" [src]="actor.image" [alt]="actor.name" >
+        <span class="actor-name">{{actor.name}}</span>
+      </div>
     </div>
-    <div class="stats">
-      <span>{{movie.release_date}}</span>
-      <span>{{movie.runtime}}mm</span>
-      <span>{{movie.popularity}}</span>
+  </div>
+  <div class="cast">
+    <div class="cast-label">CREW</div>
+    <div class="cast-row">
+      <div class="cast-col" *ngFor="let actor of crew" >
+        <img class="cast-img" [src]="actor.image" [alt]="actor.name" >
+        <span class="actor-name">{{actor.name}}</span>
+      </div>
     </div>
-    <div class="details">{{movie.overview}}</div>
   </div>
 </div>
