@@ -20,7 +20,7 @@
   <section>
     <h3>Movies</h3>
     <div class="row">
-      <div class="column" *ngFor="let movie of moviesList | keyvalue">
+      <div class="column" *ngFor="let movie of moviesList | async">
         <div class="img-wrap">
           <div class="movie-link">
             <app-movie-component [movie]="movie.value"></app-movie-component>

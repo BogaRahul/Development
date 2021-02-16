@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Movie } from '../model/movie';
 
 @Injectable({
     providedIn: 'root'
@@ -46,14 +48,14 @@ export class ApiRequestService{
         return this.IMAGE_BASE_URL + 'w300' + posterId;
     }
 
-    getMoviesByTrend(trend: string, page: string = "1"): Observable<any> {
+    getMoviesByTrend(trend: string, page: string = "1"): Observable<Movie[]> {
         const url = `${this.API_BASE_URL}movie/${trend}`
-        return this.httpClient.get(url, {
+        return this.httpClient.get<Movie[]>(url, {
             params: {
                 "api_key": "07965a14da309795e1724733d32ed7cc",
                 "page": page
             }
-        });
+        }).pipe(map(data => data['results']));
     }
 
     getCastAndCrew(movieID): Observable<any> {

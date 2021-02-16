@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './store/reducers/movies.reducers';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { ClickOutsideModule } from 'ng-click-outside';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    StoreModule.forRoot({movies: reducer})
   ],
   providers: [],
   bootstrap: [AppComponent]

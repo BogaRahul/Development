@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { ApiRequestService } from '../apirequestservice/apirequestservice';
+import { MoviesState } from '../store/reducers/movies.reducers';
+import { Observable } from 'rxjs';
+import { Movie } from '../model/movie';
+import { AppState } from '../app.state';
 
 enum MovieTrend {
   NOW_PLAYING = 'now_playing',
@@ -17,6 +22,9 @@ enum MovieTrend {
 export class HomePageComponent implements OnInit {
 
   title = 'movie-frontend-app';
+
+ movies$: Observable<Movie[]>;
+
   moviesList = {};
   favoritesList = [];
   expand = false;
@@ -24,14 +32,25 @@ export class HomePageComponent implements OnInit {
 
   @ViewChild('favorite') favElement: ElementRef;
 
-  constructor(private apiRequestService: ApiRequestService){}
+  constructor(
+    private store: Store<AppState>,
+    private apiRequestService: ApiRequestService){
+      
+    }
+    
+    
+    ngOnInit(): void {
+      // throw new Error('Method not implemented.');
+      console.log("HOMEPAGE");
+      // this.apiRequestService.getConfiguration();
+      this.movies$ = this.store.select('list');
+      this.movies$.subscribe((data) => {
+      if(data) console.log(data);
+      }
+      );
 
-
-  ngOnInit(): void {
-    // throw new Error('Method not implemented.');
-    console.log("HOMEPAGE");
-    this.apiRequestService.getConfiguration();
-    this.onTrendClick(MovieTrend.NOW_PLAYING)
+    
+    // this.onTrendClick(MovieTrend.NOW_PLAYING)
   }
 
   onSearchClick(input): void {
