@@ -1,9 +1,10 @@
+import { Movie } from './../../model/movie';
 import { Action } from "@ngrx/store";
 
 export enum Types {
   GET_MOVIES = '[MOVIES] GET MOVIES',
-  GET_MOVIES_SUCCESS = '[MOVIES1] GET MOVIES SUCCESS',
-  GET_MOVIES_FAILURE = '[MOVIES1] GET MOVIES FAILURE'
+  GET_MOVIES_SUCCESS = '[MOVIES] GET MOVIES SUCCESS',
+  GET_MOVIES_FAILURE = '[MOVIES] GET MOVIES FAILURE'
 }
 
 
@@ -13,11 +14,11 @@ export class GetMovies implements Action {
 
 export class GetMoviesSuccess implements Action {
   readonly type = Types.GET_MOVIES_SUCCESS;
-  constructor(public payload: string){}
+  constructor(public payload: Movie[]){}
 }
 export class GetMoviesFailure implements Action {
   readonly type = Types.GET_MOVIES_FAILURE;
-  constructor(public payload: Error){}
+  constructor(public payload: any){}
 }
 
 export type MoviesActions = GetMovies | GetMoviesSuccess | GetMoviesFailure;
