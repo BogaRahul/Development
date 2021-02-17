@@ -8,7 +8,9 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './store/reducers/movies.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { MoviesReducer } from './store/reducers/movies.reducers';
+import { MoviesEffects } from './store/effects/movies.effects';
 
 @NgModule({
   declarations: [
@@ -16,14 +18,16 @@ import { reducer } from './store/reducers/movies.reducers';
     MovieComponent,
     HomePageComponent,
     MovieDetailsComponent,
-    
   ],
   imports: [
     BrowserModule,
+    EffectsModule.forRoot([MoviesEffects]),
+    StoreModule.forRoot({
+      movies: MoviesReducer,
+    }),
     HttpClientModule,
     AppRoutingModule,
     ClickOutsideModule,
-    StoreModule.forRoot({movies: reducer})
   ],
   providers: [],
   bootstrap: [AppComponent]

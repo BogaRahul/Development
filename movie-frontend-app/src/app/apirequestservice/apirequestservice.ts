@@ -14,7 +14,7 @@ export class ApiRequestService{
         console.log('CONFIGURATION');
     }
     // omdb
-    // API_URL: string = 'https://www.omdbapi.com/?i=tt3896198&apikey=3562cf47&s='; 
+    // API_URL: string = 'https://www.omdbapi.com/?i=tt3896198&apikey=3562cf47&s=';
 
     //The Movie Database API TMDA
     API_KEY = 'api_key=07965a14da309795e1724733d32ed7cc';
@@ -32,7 +32,7 @@ export class ApiRequestService{
 
     // Get particular movie details
     getMovie(id: string): Observable<object> {
-        let url = this.API_BASE_URL + 'movie/' + id + '?' + this.API_KEY; 
+        let url = this.API_BASE_URL + 'movie/' + id + '?' + this.API_KEY;
         return this.httpClient
             .get(url);
     }
@@ -41,21 +41,22 @@ export class ApiRequestService{
         this.httpClient.get(this.API_CONFIG_URL)
             .subscribe((data) => {
                 this.IMAGE_BASE_URL = data['images'].base_url;
-            }); 
+            });
     }
 
     getImage(posterId: string): string {
         return this.IMAGE_BASE_URL + 'w300' + posterId;
     }
 
-    getMoviesByTrend(trend: string, page: string = "1"): Observable<Movie[]> {
+    getMoviesByTrend(trend: string, page: string = "1"): Observable<any> {
         const url = `${this.API_BASE_URL}movie/${trend}`
-        return this.httpClient.get<Movie[]>(url, {
+        return this.httpClient.get(url, {
             params: {
                 "api_key": "07965a14da309795e1724733d32ed7cc",
                 "page": page
             }
-        }).pipe(map(data => data['results']));
+        })
+        // .pipe(map(data => data['results']));
     }
 
     getCastAndCrew(movieID): Observable<any> {

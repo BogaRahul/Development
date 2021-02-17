@@ -20,16 +20,17 @@
   <section>
     <h3>Movies</h3>
     <div class="row">
-      <div class="column" *ngFor="let movie of moviesList | async">
-        <div class="img-wrap">
+      <div class="column" *ngFor="let movie of movies$ | async">
+        {{movie}}
+        <!-- <div class="img-wrap">
           <div class="movie-link">
-            <app-movie-component [movie]="movie.value"></app-movie-component>
+            <app-movie-component [movie]="movie"></app-movie-component>
           </div>
           <div class="add-fav">
-            <button type="button" class="btn btn-outline-primary" (click)="addFavorite(movie.value.id)">Add</button>
+            <button type="button" class="btn btn-outline-primary" (click)="addFavorite(movie.id)">Add</button>
           </div>
-        </div>
-        <a class="title" [routerLink]="['movie',movie.value.id]">{{movie.value.title}}</a>
+        </div> -->
+        <a class="title" [routerLink]="['movie',movie.id]">{{movie.title}}</a>
       </div>
     </div>
   </section>
