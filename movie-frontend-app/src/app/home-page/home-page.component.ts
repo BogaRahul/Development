@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { ApiRequestService } from '../apirequestservice/apirequestservice';
 import { Observable } from 'rxjs';
+
+import * as fromStore from '../store';
+
+import { ApiRequestService } from '../apirequestservice/apirequestservice';
 import { Movie } from '../model/movie';
-import { AppState } from '../app.state';
-import { MoviesActions, Types, GetMovies } from '../store/actions/movies.actions';
+import { GetMovies } from '../store/actions/movies.actions';
+
 
 
 @Component({
@@ -23,22 +26,34 @@ export class HomePageComponent implements OnInit {
   expand = false;
   fav_expanded: boolean = false;
 
+  isLoading: boolean = true;
+
   @ViewChild('favorite') favElement: ElementRef;
 
   constructor(
-    private store: Store<AppState>,
+    private store: Store<fromStore.MoviesState>,
     private apiRequestService: ApiRequestService
     ) {
+      this.apiRequestService.getConfiguration();
     }
 
     ngOnInit(): void {
-      // throw new Error('Method not implemented.');
-      console.log('HOMEPAGE');
-      this.apiRequestService.getConfiguration();
-      // this.store.dispatch({type: actions.Types.GET_MOVIES});
-      // this.movies$ = this.store.select(store => store.movies);
       this.store.dispatch(new GetMovies('now_playing'));
-      this.movies$ = this.store.select(store => store.movies)
+      this.movies$ = this.store.select('allMovies').pipe(
+        map((data) => data.data),
+        map((data) => {
+          data.forEach((movie) => {
+            movie.image =
+              movie.poster_path != null
+                ? this.getImage(movie.poster_path)
+                : null;
+          });
+          return data;
+        })
+      );
+
+      this.store.select('allMovies')
+        .subscribe(data => this.isLoading = data.loading);
 
     // this.onTrendClick(MovieTrend.NOW_PLAYING)
   }
@@ -68,13 +83,14 @@ export class HomePageComponent implements OnInit {
   }
 
   onTrendClick(trend: string, page?: string) {
-    this.favoritesList.forEach((id) => {
-      console.log(this.moviesList[id]);
-    });
-    this.apiRequestService
-      .getMoviesByTrend(trend, page)
-      .pipe(map((response) => response['results']))
-      .subscribe((data) => this.setMovies(data));
+    this.store.dispatch(new GetMovies(trend));
+    // this.favoritesList.forEach((id) => {
+    //   console.log(this.moviesList[id]);
+    // });
+    // this.apiRequestService
+    //   .getMoviesByTrend(trend, page)
+    //   .pipe(map((response) => response['results']))
+    //   .subscribe((data) => this.setMovies(data));
   }
 
   // onCardClick(id: string): void {

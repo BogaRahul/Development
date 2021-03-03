@@ -9,8 +9,10 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { MoviesReducer } from './store/reducers/movies.reducers';
-import { MoviesEffects } from './store/effects/movies.effects';
+import { effects } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './store/reducers/index';
+
 
 @NgModule({
   declarations: [
@@ -21,9 +23,11 @@ import { MoviesEffects } from './store/effects/movies.effects';
   ],
   imports: [
     BrowserModule,
-    EffectsModule.forRoot([MoviesEffects]),
-    StoreModule.forRoot({
-      movies: MoviesReducer,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: false, // Restrict extension to log-only mode
     }),
     HttpClientModule,
     AppRoutingModule,

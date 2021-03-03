@@ -1,5 +1,5 @@
-import { Movie } from './../../model/movie';
-import { Action } from "@ngrx/store";
+import { Action, createAction, props } from '@ngrx/store';
+import { Movie } from 'src/app/model/movie';
 
 export enum Types {
   GET_MOVIES = '[MOVIES] Get Movies',
@@ -20,4 +20,8 @@ export class GetMoviesFailure implements Action {
   constructor(public payload: any){}
 }
 
-export type MoviesActions = GetMovies | GetMoviesSuccess | GetMoviesFailure;
+export type ActionsType = GetMovies | GetMoviesSuccess | GetMoviesFailure;
+
+// export const GetMovies = createAction(Types.GET_MOVIES);
+// export const GetMoviesSuccess = createAction(Types.GET_MOVIES_SUCCESS, props<{movies: Movie[]}>());
+// export const GetMoviesFailure = createAction(Types.GET_MOVIES_FAILURE, props<{error:any}>());

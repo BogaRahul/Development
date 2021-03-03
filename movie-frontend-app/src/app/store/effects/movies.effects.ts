@@ -1,38 +1,48 @@
+import { Injectable, Type } from '@angular/core';
+
+import { Actions, Effect, ofType } from '@ngrx/effects';
+
+import { catchError, map, switchMap, withLatestFrom, } from 'rxjs/operators';
+import { of } from 'rxjs';
+
 import { ApiRequestService } from './../../apirequestservice/apirequestservice';
-import {
-  Types,
-  GetMoviesSuccess,
-  GetMoviesFailure,
-} from './../actions/movies.actions';
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import * as actions from './../actions/movies.actions';
+import * as reducers from '../reducers/movies.reducers';
+import { Store } from '@ngrx/store';
 import { Movie } from '../../model/movie';
-import { Action, State } from '@ngrx/store';
 
 @Injectable()
 export class MoviesEffects {
+  constructor(
+    private actions$: Actions,
+    private store: Store<reducers.State>,
+    private apiService: ApiRequestService
+  ) {}
+
   @Effect()
   getMovies$ =
     this.actions$.pipe(
-      ofType(Types.GET_MOVIES),
-      switchMap((action) => {
-        const movieTrend = action['payload'];
-        console.log(movieTrend);
-         return this.apiService.getMoviesByTrend(movieTrend).pipe(
-          map((movies) => {
-              console.log(movies);
-             return new GetMoviesSuccess(movies);
-          }),
-          catchError((error) => of(new GetMoviesFailure(error)))
-        );
-      })
+      ofType(actions.Types.GET_MOVIES),
+      // withLatestFrom(
+      //   this.store.select(selectors.getAllMoviesState),
+      //   (actions: any, state: any) => state
+      // ),
+      map((actions: actions.GetMovies) => actions.payload),
+      switchMap((payload): any => {
+        console.log(payload);
+        return this.apiService.getMoviesByTrend(payload)
+          .pipe(
+            map(movies => {
+              const allMovies: Movie[] = [];
+              movies.results.forEach(element => {
+                allMovies.push(element)
+              });
+              console.log(allMovies);
+              return new actions.GetMoviesSuccess(allMovies);
+            }),
+            catchError(error => of(new actions.GetMoviesFailure({error})))
+          );
+        }
+      )
     );
-//   });
-
-  constructor(
-    private actions$: Actions,
-    private apiService: ApiRequestService
-  ) {}
 }

@@ -17,20 +17,22 @@
     <input type="text" class="form-control mb-3" placeholder="Search movie" id="inputDefault" #searchInput>
     <button type="button" class="btn btn-outline-primary" (click)="onSearchClick(searchInput.value)">Search</button>
   </div> -->
-  <section>
+  <section class="section">
     <h3>Movies</h3>
-    <div class="row">
+    <div class="loader" *ngIf="isLoading">
+      <div class="loader-01"></div>
+    </div>
+    <div class="row" *ngIf="!isLoading">
       <div class="column" *ngFor="let movie of movies$ | async">
-        {{movie}}
-        <!-- <div class="img-wrap">
-          <div class="movie-link">
+        <div class="img-wrap">
+          <div class="movie-link" [routerLink]="['movie',movie.id]">
             <app-movie-component [movie]="movie"></app-movie-component>
           </div>
-          <div class="add-fav">
+          <!-- <div class="add-fav">
             <button type="button" class="btn btn-outline-primary" (click)="addFavorite(movie.id)">Add</button>
-          </div>
-        </div> -->
-        <a class="title" [routerLink]="['movie',movie.id]">{{movie.title}}</a>
+          </div> -->
+        </div>
+        <!-- <a class="title" [routerLink]="['movie',movie.id]">{{movie.title}}</a> -->
       </div>
     </div>
   </section>
